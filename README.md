@@ -291,7 +291,46 @@ public HttpResponseMessage Get(int id)
   ```
   </details> 
   
+  -----
   
+  -----
+  
+# Method Customization  
+
+## Query string parameters
+<details>
+  <summary>Click to expand!</summary>
+  
+   -----
+  
+  ### Get(string gender = "All")
+<details>
+  <summary>Click to expand!</summary>
+  
+  ``` 
+  public HttpResponseMessage Get(string gender = "All")
+{
+    using (EmployeeDBEntities entities = new EmployeeDBEntities())
+    {
+        switch (gender.ToLower())
+        {
+            case "all":
+                return Request.CreateResponse(HttpStatusCode.OK,
+                    entities.Employees.ToList());
+            case "male":
+                return Request.CreateResponse(HttpStatusCode.OK,
+                    entities.Employees.Where(e => e.Gender.ToLower() == "male").ToList());
+            case "female":
+                return Request.CreateResponse(HttpStatusCode.OK,
+                    entities.Employees.Where(e => e.Gender.ToLower() == "female").ToList());
+            default:
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                    "Value for gender must be Male, Female or All. " + gender + " is invalid.");
+        }
+    }
+}
+  ```
+  </details> 
   </details>
 
 ### Projects:
