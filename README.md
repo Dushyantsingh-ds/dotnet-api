@@ -1,5 +1,8 @@
 ## DotNet Projects API's Practice
 
+## .Net Web API Projects
+-1 [Simple web api Project](https://github.com/Dushyantsingh-ds/dotnet-api/tree/main/Projects/WebApplication_project_03)
+
 ## HTTP verbs
 <details>
   <summary>Click to expand!</summary>
