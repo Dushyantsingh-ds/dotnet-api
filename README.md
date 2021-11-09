@@ -1,7 +1,9 @@
 ## DotNet Projects API's Practice
 
 ## .Net Web API Projects
--1 [Simple web api Project](https://github.com/Dushyantsingh-ds/dotnet-api/tree/main/Projects/WebApplication_project_03)
+-1 [Simple web api Project](https://github.com/Dushyantsingh-ds/dotnet-api/tree/main/Projects/WebApplication_project_03) <br/>
+-2 [Empolyee Web api Project](https://github.com/Dushyantsingh-ds/dotnet-api/tree/main/Projects/EmployeeService_project_04) <br/>
+-3 [Semi Advance web api project](https://github.com/Dushyantsingh-ds/dotnet-api/tree/main/Projects/JsonProject_05) <br/>
 
 ## HTTP verbs
 <details>
