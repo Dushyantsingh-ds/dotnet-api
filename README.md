@@ -295,10 +295,10 @@ public HttpResponseMessage Get(int id)
 }
   ```
   </details> 
+  </details> 
   
   -----
   
-  -----
   
 # Method Customization  
 
@@ -337,6 +337,68 @@ public HttpResponseMessage Get(int id)
   ```
   </details> 
   </details>
+  
+  -----
+  
+## cross-origin requests  
+<details>
+  <summary>Click to expand!</summary>
+  
+## -1 Install NuGet Package.  <br/>
+  
+ ### 1.1-Package Manager Console. <br>
+  Use this cmd in VS Terminal <br>
+  ``` Install-Package WebApiContrib.Formatting.Jsonp ``` 
+## 2 Edit Config file <br>
+  
+Open the file App_Start/WebApiConfig.cs. Add the following code to the WebApiConfig.Register method: 
+  ```
+var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
+config.Formatters.Insert(0, jsonpFormatter);
+  ```
+  
+  From this 
+  ```
+   public static void Register(HttpConfiguration config)
+        {
+            // Web API configuration and services
+            // Configure Web API to use only bearer token authentication.
+            config.SuppressDefaultHostAuthentication();
+            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+
+            // Web API routes
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+        }
+  ```
+  
+  To this
+  ```
+    public static void Register(HttpConfiguration config)
+        {
+            // Web API configuration and services
+            // Configure Web API to use only bearer token authentication.
+            config.SuppressDefaultHostAuthentication();
+            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+
+            // Web API routes
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+            var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
+            config.Formatters.Insert(0, jsonpFormatter); 
+        }
+  ```
+</details>
 
 ### Projects:
 -1 [Jsonplaceholder Sample API call](https://github.com/Dushyantsingh-ds/dotnet-api/tree/main/Projects/WebApplication_project_03)
