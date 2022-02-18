@@ -349,7 +349,9 @@ public HttpResponseMessage Get(int id)
  ### 1.1-Package Manager Console. <br>
   Use this cmd in VS Terminal <br>
   ``` Install-Package WebApiContrib.Formatting.Jsonp ``` 
-## 2 Edit Config file <br>
+## 2 Add NameSpace
+  ``` using WebApiContrib.Formatting.Jsonp; ```
+## 3 Edit Config file <br>
   
 Open the file App_Start/WebApiConfig.cs. Add the following code to the WebApiConfig.Register method: 
   ```
