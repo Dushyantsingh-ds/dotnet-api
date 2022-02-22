@@ -25,6 +25,68 @@
 
 Accetpt:application/xml <br/>
 Accetpt:application/json <br/>
+  
+## jsonpFormatter  
+<details>
+  <summary>Click to expand!</summary>
+  
+## -1 Install NuGet Package.  <br/>
+  
+ ### 1.1-Package Manager Console. <br>
+  Use this cmd in VS Terminal <br>
+  ``` Install-Package WebApiContrib.Formatting.Jsonp ``` 
+## 2 Add NameSpace
+  ``` using WebApiContrib.Formatting.Jsonp; ```
+## 3 Edit Config file <br>
+  
+Open the file App_Start/WebApiConfig.cs. Add the following code to the WebApiConfig.Register method: 
+  ```
+var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
+config.Formatters.Insert(0, jsonpFormatter);
+  ```
+  
+  From this 
+  ```
+   public static void Register(HttpConfiguration config)
+        {
+            // Web API configuration and services
+            // Configure Web API to use only bearer token authentication.
+            config.SuppressDefaultHostAuthentication();
+            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+
+            // Web API routes
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+        }
+  ```
+  
+  To this
+  ```
+    public static void Register(HttpConfiguration config)
+        {
+            // Web API configuration and services
+            // Configure Web API to use only bearer token authentication.
+            config.SuppressDefaultHostAuthentication();
+            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+
+            // Web API routes
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+            var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
+            config.Formatters.Insert(0, jsonpFormatter); 
+        }
+  ```
+</details>
 </details>
 
 ------------------
@@ -340,6 +402,8 @@ public HttpResponseMessage Get(int id)
   
   -----
   
+
+    
 ## cross-origin requests  
 <details>
   <summary>Click to expand!</summary>
@@ -348,16 +412,13 @@ public HttpResponseMessage Get(int id)
   
  ### 1.1-Package Manager Console. <br>
   Use this cmd in VS Terminal <br>
-  ``` Install-Package WebApiContrib.Formatting.Jsonp ``` 
-## 2 Add NameSpace
-  ``` using WebApiContrib.Formatting.Jsonp; ```
-## 3 Edit Config file <br>
-  
-Open the file App_Start/WebApiConfig.cs. Add the following code to the WebApiConfig.Register method: 
+  ``` Install-Package Microsoft.AspNet.WebApi.Cors ``` 
+## 2 Include the following 2 lines of code in Register() method of WebApiConfig class in WebApiConfig.cs file in App_Start folder
+  ``` 
+  EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+  config.EnableCors(); 
   ```
-var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
-config.Formatters.Insert(0, jsonpFormatter);
-  ```
+## Code Demo
   
   From this 
   ```
@@ -396,8 +457,8 @@ config.Formatters.Insert(0, jsonpFormatter);
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-            var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
-            config.Formatters.Insert(0, jsonpFormatter); 
+            EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors();
         }
   ```
 </details>
