@@ -464,6 +464,84 @@ public HttpResponseMessage Get(int id)
         }
   ```
 </details>
+       
+## Modify Token Response  
+<details>
+  <summary>Click to expand!</summary>
+
+## 1 Update the following code in CreateProperties() method class in ApplicationOAuthProvider.cs file in Provider folder
+## Code Demo
+  
+  From this 
+  ```
+     public static AuthenticationProperties CreateProperties(string userName)
+        {
+            IDictionary<string, string> data = new Dictionary<string, string>
+            {
+                { "userName", userName }
+            };
+            return new AuthenticationProperties(data);
+        }
+  ```
+  
+  To this
+  ```
+     public static AuthenticationProperties CreateProperties(string userName)
+        {
+            AchievedItDBEntities entities = new AchievedItDBEntities();
+
+            var UserId = entities.AspNetUsers.Where(r => r.UserName == userName).FirstOrDefault().Id;
+            var RoleId = entities.AspNetUserRoles.Where(r => r.UserId == UserId).FirstOrDefault().RoleId;
+            var Role = entities.AspNetRoles.Where(r => r.Id == RoleId).FirstOrDefault().Name;
+            string redirectURL = "";
+            if (Role == "SuperAdmin".ToUpper())
+            {
+                redirectURL = "/SuperAdmin";
+            }
+            else if (Role == "Admin".ToUpper())
+            {
+                redirectURL = "/Admin";
+            }
+            else if (Role == "Verifier".ToUpper())
+            {
+                redirectURL = "/Verifier";
+            }
+            else if (Role == "User")
+            {
+                redirectURL = "/User";
+            }
+            else
+            {
+                redirectURL = "Invaild";
+            }
+            IDictionary<string, string> data = new Dictionary<string, string>
+            {
+                { "userName", userName },
+                { "redirectURL", redirectURL}
+            };
+            return new AuthenticationProperties(data);
+        }
+  ```
+## Request Url Post Method
+  ``` https://localhost:44338/token ```
+## Body  
+  ``` Username=admin4@test.com&Password=Abc123@Xxx&grant_type=password ```
+## API Response
+  ```
+  {
+  "access_token":"Wm-2lne4f82ZFOcztiE_IjLyEq5MakfZw03kevDpxv_56fOIUX-j35cmizo98i9OjmcBiddJqLDKYCOqJc1QpFDL1XXY16CCFJpBx9Icg3ZZAeTX83Ii2uIolUjEy--KlaDrDE7oUCllZur8v-HyD91Q8sYS25X-tgeefYAGW_K1smzksBsz203mvmOL9f9XGMmA5EJHIg6bFay4f_y6K1v0liWS-CZc_YvqzSCPowPX5svsRywXeJeEploYwI4Mly7axW6tKBFsmQRPv7OTjp9OQhXSpA33wAH656IRCcA1IUPEMtgM5-A9ja8QIMDtht-ZQOGTE-HPimGcn7lxLzTJP7kwqYX9DOncJBZIXKafLMxNIEQRG-s7E7NZMs3sXL5v-XvZF6N4mdR37xJ1IUw8hiNvCfk8B23BBeC4R7-Uu6r4ZRqmLb7QgqOSFP440Sa-XXtPdDCjfCQBNSDX42eGKAzOIzBH9b8XGAJZ-JYjm0Ysv7WjbPvvqWEuKrz8RZA6YYWyHEXGNkERxnkdI7sRVx7oKvbJpZ3Jkm9mQxc",
+  "token_type":"bearer",
+  "expires_in":1209599,
+  "userName":"admin4@test.com",
+  "redirectURL":"/Admin",
+  ".issued":"Fri, 25 Mar 2022 20:40:25 GMT",
+  ".expires":"Fri, 08 Apr 2022 20:40:25 GMT"
+  }
+  ```
+  
+  
+  
+</details>
 
 ### Projects:
 -1 [Jsonplaceholder Sample API call](https://github.com/Dushyantsingh-ds/dotnet-api/tree/main/Projects/WebApplication_project_03)
