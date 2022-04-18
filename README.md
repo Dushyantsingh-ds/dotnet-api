@@ -6,7 +6,10 @@
 -3 [Semi Advance web api project](https://github.com/Dushyantsingh-ds/dotnet-api/tree/main/Projects/JsonProject_05) <br/>
 -4 [Token Based Auth](https://github.com/Dushyantsingh-ds/dotnet-api/tree/main/Projects/TokenBasedAuthWebApp) <br/>
 
-
+## .Net API
+<details>
+  <summary>Click to expand!</summary>
+  
 ## HTTP verbs
 <details>
   <summary>Click to expand!</summary>
@@ -540,8 +543,82 @@ public HttpResponseMessage Get(int id)
   ```
   
   
-  
+</details>
 </details>
 
+## JS / Jquery / Ajax
+<details>
+  <summary>Click to expand!</summary>
+ 
+  ### [Post Request] - Jquery/Ajax - Create User 
+  <details>
+  <summary>Click to expand!</summary>
+    
+   ``` 
+  <script type="text/javascript">
+        $(document).ready(function () {
+
+            // Save the new user details
+            $('#btnRegister').click(function () {
+                $.ajax({
+                    url: '/api/account/register',
+                    method: 'POST',
+                    data: {
+                        email: $('#txtEmail').val(),
+                        password: $('#txtPassword').val(),
+                        confirmPassword: $('#txtConfirmPassword').val()
+                    },
+                    success: function () {
+                        $('#successModal').modal('show');
+                    },
+                    error: function (jqXHR) {
+                        $('#divErrorText').text(jqXHR.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+ ```
+</details>
+  
+  ### [Post Request] - Jquery/Ajax - Login User 
+  <details>
+  <summary>Click to expand!</summary>
+    
+```
+   <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#linkClose').click(function () {
+                $('#divError').hide('fade');
+            });
+
+            $('#btnLogin').click(function () {
+                $.ajax({
+                    url: '/token',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: {
+                        username: $('#txtUsername').val(),
+                        password: $('#txtPassword').val(),
+                        grant_type: 'password'
+                    },
+                    success: function (response) {
+                        sessionStorage.setItem("accessToken", response.access_token);
+                        window.location.href = "dashboard";
+                    },
+                    error: function (jqXHR) {
+                        $('#divErrorText').text(jqXHR.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+```    
+    
+</details>
+  
+</details>
+  
 ### Projects:
 -1 [Jsonplaceholder Sample API call](https://github.com/Dushyantsingh-ds/dotnet-api/tree/main/Projects/WebApplication_project_03)
