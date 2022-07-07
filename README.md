@@ -421,7 +421,7 @@ public HttpResponseMessage Get(int id)
 ## 2 Include the following 2 lines of code in Register() method of WebApiConfig class in WebApiConfig.cs file in App_Start folder
   ``` 
   EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
-  config.EnableCors(); 
+  config.EnableCors(cors); 
   ```
 ## Code Demo
   
@@ -463,7 +463,7 @@ public HttpResponseMessage Get(int id)
                 defaults: new { id = RouteParameter.Optional }
             );
             EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
-            config.EnableCors();
+            config.EnableCors(cors);
         }
   ```
 </details>
