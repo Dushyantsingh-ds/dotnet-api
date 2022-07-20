@@ -617,6 +617,18 @@ public HttpResponseMessage Get(int id)
 ```    
     
 </details>
+
+### [Get Request] - DropDown List Jquery/Ajax with Entity framewrok - Select List 
+  <details>
+  <summary>Click to expand!</summary>
+ 
+HTML CODE for Dropdown
+```
+ <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Subject (Optional)</label>
+ <select class="form-control" id="departmentsDropdown" name="departmentsDropdown"></select>
+
+```
+</details>
   
 </details>
   
