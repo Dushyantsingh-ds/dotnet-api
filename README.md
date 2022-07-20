@@ -628,6 +628,42 @@ HTML CODE for Dropdown
  <select class="form-control" id="departmentsDropdown" name="departmentsDropdown"></select>
 
 ```
+    
+JS script
+
+```
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Save the new user details
+        App.init();
+
+        $.ajax({
+            type: "GET",
+            url: "/api/subjects",
+            data: "{}",
+            success: function (data) {
+                var s = '<option value="-1">Select a Subject</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].SubjectId + '">' + data[i].Name + '</option>';
+                    console.log(data[i].name + "------" + data[i].SubjectId);
+                }
+                $("#departmentsDropdown").html(s);
+            }
+        });
+        });
+    </script>
+```    
+API Get Method
+```
+private ExamAcademyEntities db = new ExamAcademyEntities();
+
+        // GET: api/Subjects
+        public IQueryable<Subject> GetSubjects()
+        {
+            return db.Subjects;
+        }
+```
 </details>
   
 </details>
