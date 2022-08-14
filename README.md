@@ -6,10 +6,8 @@
 -3 [Semi Advance web api project](https://github.com/Dushyantsingh-ds/dotnet-api/tree/main/Projects/JsonProject_05) <br/>
 -4 [Token Based Auth](https://github.com/Dushyantsingh-ds/dotnet-api/tree/main/Projects/TokenBasedAuthWebApp) <br/>
 
-## .Net API
-<details>
-  <summary>Click to expand!</summary>
-  
+# .Net API
+
 ## HTTP verbs
 <details>
   <summary>Click to expand!</summary>
@@ -402,9 +400,7 @@ public HttpResponseMessage Get(int id)
     }
 }
   ```
-  </details> 
-  </details>
-  
+  </details>   
   -----
   
 
