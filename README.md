@@ -400,8 +400,71 @@ public HttpResponseMessage Get(int id)
     }
 }
   ```
+  </details>
+  </details>
+  
+  ## Retrieve Data from Multiple tables
+<details>
+  <summary>Click to expand!</summary>
+  
+  ### Tabels:
+  Users, <br>
+  Roles, <br>
+  UserRoles, <br>
+  Subjects, <br>
+  SubjectAuthors <br>
+  
+ ###  Code <br>
+  Step-1: Code for Custom List <br>
+  ```
+   public class AuthorsList
+        {
+            public string Id { get; set; }
+            public string Email { get; set; }
+            public string Name { get; set; }
+            public string UserId { get; set; }
+            public string RoleId { get; set; }
+            public string Username { get; set; }
+            public string SubjectId { get; set; }
+        }
+  ```
+  
+  Step-2 Code for Qurey
+  ```
+    // GET: api/master/authors
+        [AllowAnonymous]
+        [Route("api/master/Authors")]
+        public List<AuthorsList> GetAuthors()
+        {
+            AuthorsList authorlisst = new AuthorsList();
+           var _autobj = (from r in entities.AspNetUserRoles
+                           where r.AspNetRole.Name == "AUTHOR"
+                           select new
+                           {
+                               r.UserId,
+                               r.AspNetUser.Email,
+                               r.AspNetUser.SubjectAuthors.FirstOrDefault().SubjectId,
+                               r.AspNetUser.SubjectAuthors.FirstOrDefault().Subject.Name
+                           }).ToList();
+            List<AuthorsList> authList = new List<AuthorsList>();
+            foreach (var _autitem in _autobj)
+            {
+                authList.Add(new AuthorsList { UserId = _autitem.UserId, Email = _autitem.Email, 
+                    SubjectId = _autitem.SubjectId.ToString(), Name = _autitem.Name });
+            }
+
+            return authList;
+        }
+  ```
+  
+  Step-3: Output
+  ```
+  [{"$id":"1","Id":null,"Email":"alex@g.com","Name":"Dermatology","UserId":"c8e5444a-f9df-4fae-b7c3-837672316ddc","RoleId":null,"Username":null,"SubjectId":"4"},{"$id":"2","Id":null,"Email":"john@g.com","Name":"Anatomy","UserId":"e0113bbc-f5e6-4397-a329-960c8b8a4f11","RoleId":null,"Username":null,"SubjectId":"6"}]
+  ```
+  
+  </details>
   </details>   
-  -----
+
   
 
     
