@@ -608,7 +608,105 @@ public HttpResponseMessage Get(int id)
 ## JS / Jquery / Ajax
 <details>
   <summary>Click to expand!</summary>
+  
+ ### [Get Request] - Display Data on HTML TABLE Jquery/Ajax with Entity framewrok  
+  <details>
+  <summary>Click to expand!</summary>
  
+HTML CODE for Table
+```
+  <div class=" row">
+       <label id="tabledivErrorText"></label>
+          <table class="table table-bordered" id="tblData">
+             <thead>
+               <tr class="success">
+                   <th>Id</th>
+                   <th>Name</th>
+                   <th>Email</th>
+                   <th>Phone</th>
+                   <th>Age</th>
+               </tr>
+             </thead>
+           <tbody id="tblBody"></tbody>
+          </table>
+  </div>
+```
+    
+JS script
+
+```
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+       $.ajax({
+        url: '/api/Member/GetFamilyMemberById/2',
+        method: 'GET',
+        success: function (data) {
+            $('#tblBody').empty();
+            $.each(data, function (index, value) {
+                var row = $('<tr><td>'+ value.Id + '</td><td>'
+                    + value.Name + '</td><td>'
+                    + value.Email + '</td><td>'
+                    + value.Phone + '</td><td>'
+                    + value.Age + '</td></tr>');
+                $('#tblData').append(row);
+            });
+        },
+        error: function (jQXHR) {
+            // If status code is 401, access token expired, so
+            // redirect the user to the login page
+            if (jQXHR.status == "401") {
+                $('#tabledivErrorText').text("401");
+            }
+            else {
+                $('#tabledivErrorText').text(jqXHR.responseText);
+            }
+        }
+    });
+  });
+    </script>
+```    
+API Get Method
+```
+private PerformanceTestDBEntities entities = new PerformanceTestDBEntities();
+  // GET: api/GetListMembersId
+  [ResponseType(typeof(Member))]
+  [HttpGet]
+  [Route("api/Member/GetFamilyMemberById/{Id}")]
+  public IHttpActionResult GetFamilyMember(string id)
+  {
+      int ids = Convert.ToInt32(id);
+      try
+        {
+         var _autobj = (from r in entities.FamilyMemberDetails
+                       where r.Member.MemberId == ids
+                        select new
+                          {
+                            r.MemberId,
+                            r.Id,
+                            r.Name,
+                            r.Email,
+                            r.Phone,
+                            r.Age
+               }).OrderByDescending(a => a.Age).ToList();
+            
+         return Ok(_autobj);
+        }
+    catch (DbUpdateConcurrencyException)
+     {
+      if (!MemberExists(ids))
+       {
+           return NotFound();
+       }
+       else
+         {
+            throw;
+         }
+      }
+ }
+```
+</details>
+  
   ### [Post Request] - Jquery/Ajax - Create User 
   <details>
   <summary>Click to expand!</summary>
