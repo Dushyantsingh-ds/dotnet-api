@@ -543,6 +543,22 @@ builder.Services.AddCors(p => p.AddPolicy(myOrigins, build =>
 app.UseCors(myOrigins); // enable the cors origin
 
   ```
+
+## Three ways to config corse
+```
+// allow all domains
+//builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
+//{
+//    build.WithOrigins("http://localhost:4200/").AllowAnyMethod().AllowAnyHeader();
+//}));
+// allow pertical domains
+// allow all domains
+//builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
+//{
+//    build.WithOrigins("http://localhost:4200/","http://localhost:7200/").AllowAnyMethod().AllowAnyHeader();
+//}));
+// allow multipule domains
+```
 ## Code Demo
   
   From this 
