@@ -545,6 +545,7 @@ app.UseCors(myOrigins); // enable the cors origin
   ```
 
 ## Three ways to config corse
+
 ```
 // allow all domains
 //builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
@@ -558,6 +559,7 @@ app.UseCors(myOrigins); // enable the cors origin
 //    build.WithOrigins("http://localhost:4200/","http://localhost:7200/").AllowAnyMethod().AllowAnyHeader();
 //}));
 // allow multipule domains
+
 ```
 ## Code Demo
   
