@@ -526,7 +526,95 @@ public HttpResponseMessage Get(int id)
         }
   ```
 </details>
+
+## cross-origin .Net core requests  
+<details>
+  <summary>Click to expand!</summary>
+  
+## 1 Include the following 2 lines of code in Register() method of WebApiConfig class in WebApiConfig.cs file in App_Start folder
+  ``` 
+var myOrigins = "corspolicy";
+
+builder.Services.AddCors(p => p.AddPolicy(myOrigins, build =>
+{
+    build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
+
+app.UseCors(myOrigins); // enable the cors origin
+
+  ```
+## Code Demo
+  
+  From this 
+  ```
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+
+  ```
+  
+  To this
+  ```
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+var myOrigins = "corspolicy";
+
+builder.Services.AddCors(p => p.AddPolicy(myOrigins, build =>
+{
+    build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+app.UseCors(myOrigins); // enable the cors origin
+app.Run();
+
+  ```
+</details>
        
+
+
 ## Modify Token Response  
 <details>
   <summary>Click to expand!</summary>
